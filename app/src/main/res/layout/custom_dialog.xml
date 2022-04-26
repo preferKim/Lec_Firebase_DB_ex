@@ -5,6 +5,7 @@
     android:orientation="vertical">
 
     <EditText
+        android:id="@+id/healthMemo"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_margin="20dp"
@@ -24,6 +25,14 @@
         android:layout_height="60dp"
         android:layout_margin="20dp"
         android:text="날짜를 선택해주세요" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="저장하기" />
 
 
 </LinearLayout>

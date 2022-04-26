@@ -6,8 +6,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.DatePicker
+import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +30,8 @@ class MainActivity : AppCompatActivity() {
 
             val dateSelectBtn = mAlertDialog.findViewById<Button>(R.id.dateSelectBtn)
 
+            var dateText: String = ""
+
             dateSelectBtn?.setOnClickListener {
 
                 val today = GregorianCalendar()
@@ -42,6 +47,8 @@ class MainActivity : AppCompatActivity() {
                         dayOfMonth: Int
                     ) {
                         dateSelectBtn.setText("${year}, ${month}, ${dayOfMonth}")
+
+                        dateText = "${year}, ${month}, ${dayOfMonth}"
                     }
 
                 }, year, month, date)
@@ -50,8 +57,27 @@ class MainActivity : AppCompatActivity() {
 
             }
 
-        }
+            val saveBtn = mAlertDialog.findViewById<Button>(R.id.saveBtn)
+            saveBtn?.setOnClickListener {
 
+                val healthMemo =
+                    mAlertDialog.findViewById<EditText>(R.id.healthMemo)?.text.toString()
+
+                val database = Firebase.database
+                val myRef = database.getReference("myMemo")
+
+                val model = DataModel(dateText, healthMemo)
+
+                myRef
+                    .push()
+                    .setValue(model)
+
+//                myRef.setValue("Hello, World!")
+//                myRef.push().setValue("Hello, World!") // 중복 허용하면서 데이터 추가
+
+            }
+
+        }
 
     }
 
